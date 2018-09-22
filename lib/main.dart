@@ -20,7 +20,7 @@ void main () async {
       body: new Center(
         child: new ListView.builder(
             itemCount: _data.length,
-            padding: const EdgeInsets.all(14.5),
+            padding: const EdgeInsets.all(2.5),
             itemBuilder: (BuildContext context, int position) {
               return Column(
                 children: <Widget>[
@@ -40,7 +40,7 @@ void main () async {
                     ),
                     leading: new CircleAvatar(
                       backgroundColor: Colors.greenAccent,
-                      child: new Text("${_data[position]['body'][0]}",
+                      child: new Text("${_data[position]['body'][0]}".toUpperCase(),
                       style: new TextStyle(
                         fontSize: 18.4,
                         color: Colors.white,
@@ -48,6 +48,7 @@ void main () async {
                       ),
                       ),
                     ),
+                    onTap: () => _showOnTapMessage(context, "${_data[position]['body']}"),
                   )
                 ],
               );
@@ -56,6 +57,23 @@ void main () async {
       ),
     ),
   );
+}
+
+void _showOnTapMessage(BuildContext context, String message) {
+  var alert = new AlertDialog(
+    title: Text("My App"),
+    content: Text(message),
+    actions: <Widget>[
+      FlatButton(
+        child: Text('OK'),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      )
+    ],
+  );
+
+  showDialog(context: context, builder: (context) => alert);
 }
 
 Future<List> getPosts() async {
