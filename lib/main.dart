@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:convert/convert.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -10,7 +9,18 @@ void main () async {
 
   List _data = await getPosts();
   int num = _data[0]['userId'];
-  print(num);
+  String title = _data[0]['title'];
+
+  String _body = "";
+
+  for (int i = 0; i < _data.length; i++) {
+    print(_data[i]['title'] );
+    print(' body: ' + _data[i]['body']);
+  }
+
+  _body = _data[0]['body'];
+
+
 
   runApp(new MaterialApp(
     home: new Scaffold(
@@ -21,15 +31,15 @@ void main () async {
           backgroundColor: Colors.orangeAccent,
         ),
       body: new Center(
-        child: new Text('Parsing...'),
+        child: new Text('Body.... $_body'),
       ),
       ),
     ),
   );
 }
 
-Future getPosts() async {
-  String URI = 'https://jsonplaceholder.typicode.com/posts';
-  http.Response response = await http.get(URI);
+Future<List> getPosts() async {
+  String uri = 'https://jsonplaceholder.typicode.com/posts';
+  http.Response response = await http.get(uri);
   return json.decode(response.body);
 }
