@@ -8,19 +8,6 @@ import 'package:http/http.dart' as http;
 void main () async {
 
   List _data = await getPosts();
-  int num = _data[0]['userId'];
-  String title = _data[0]['title'];
-
-  String _body = "";
-
-  for (int i = 0; i < _data.length; i++) {
-    print(_data[i]['title'] );
-    print(' body: ' + _data[i]['body']);
-  }
-
-  _body = _data[0]['body'];
-
-
 
   runApp(new MaterialApp(
     home: new Scaffold(
@@ -31,7 +18,40 @@ void main () async {
           backgroundColor: Colors.orangeAccent,
         ),
       body: new Center(
-        child: new Text('Body.... $_body'),
+        child: new ListView.builder(
+            itemCount: _data.length,
+            padding: const EdgeInsets.all(14.5),
+            itemBuilder: (BuildContext context, int position) {
+              return Column(
+                children: <Widget>[
+                  new Divider(height: 5.5),
+                  new ListTile(
+                    title: new Text("${_data[position]['title']}",
+                    style: new TextStyle(
+                      fontSize: 17.9,
+                    ),
+                    ),
+                    subtitle: new Text("${_data[position]['body']}",
+                      style: new TextStyle(
+                        fontSize: 13.9,
+                        color: Colors.grey,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    leading: new CircleAvatar(
+                      backgroundColor: Colors.greenAccent,
+                      child: new Text("${_data[position]['body'][0]}",
+                      style: new TextStyle(
+                        fontSize: 18.4,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                      ),
+                      ),
+                    ),
+                  )
+                ],
+              );
+            }),
       ),
       ),
     ),
